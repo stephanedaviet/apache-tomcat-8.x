@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly
+    xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
+    xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+    <id>apache-tomcat</id>
+
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <fileSets>
+        <fileSet>
+            <useDefaultExcludes>true</useDefaultExcludes>
+            <directory>src/main/resources</directory>
+            <outputDirectory>${tomcat.archive.root.folder}/lib</outputDirectory>
+            <includes>
+                <include>logback.groovy</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>/</outputDirectory>
+            <useProjectArtifact>false</useProjectArtifact>
+            <useProjectAttachments>false</useProjectAttachments>
+            <useStrictFiltering>false</useStrictFiltering>
+            <useTransitiveDependencies>false</useTransitiveDependencies>
+            <unpack>true</unpack>
+            <includes>
+                <include>org.apache.tomcat:tomcat:tar.gz:*</include>
+            </includes>
+            <unpackOptions>
+                <useDefaultExcludes>true</useDefaultExcludes>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <excludes>
+                    <exclude>${tomcat.archive.root.folder}/bin/tomcat-juli.jar</exclude>
+                    <exclude>${tomcat.archive.root.folder}/conf/logging-properties</exclude>
+                </excludes>
+            </unpackOptions>
+        </dependencySet>
+        <dependencySet>
+            <outputDirectory>${tomcat.archive.root.folder}/bin</outputDirectory>
+            <useProjectArtifact>false</useProjectArtifact>
+            <useProjectAttachments>false</useProjectAttachments>
+            <useStrictFiltering>false</useStrictFiltering>
+            <useTransitiveDependencies>false</useTransitiveDependencies>
+            <unpack>false</unpack>
+            <outputFileNameMapping>tomcat-juli.jar</outputFileNameMapping>
+            <includes>
+                <include>org.apache.tomcat.extras:tomcat-extras-juli:jar:*</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <outputDirectory>${tomcat.archive.root.folder}/lib</outputDirectory>
+            <useProjectArtifact>false</useProjectArtifact>
+            <useProjectAttachments>false</useProjectAttachments>
+            <useStrictFiltering>false</useStrictFiltering>
+            <useTransitiveDependencies>false</useTransitiveDependencies>
+            <unpack>false</unpack>
+            <outputFileNameMapping>tomcat-juli-adapters.jar</outputFileNameMapping>
+            <includes>
+                <include>org.apache.tomcat.extras:tomcat-extras-juli-adapters:jar:*</include>
+            </includes>
+        </dependencySet>
+        <dependencySet>
+            <outputDirectory>${tomcat.archive.root.folder}/lib</outputDirectory>
+            <useProjectArtifact>false</useProjectArtifact>
+            <useProjectAttachments>false</useProjectAttachments>
+            <useStrictFiltering>false</useStrictFiltering>
+            <useTransitiveDependencies>false</useTransitiveDependencies>
+            <unpack>false</unpack>
+            <outputFileNameMapping>${artifact.artifactId}${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
+            <includes>
+                <include>org.slf4j:*slf4j*:jar:*</include>
+                <include>ch.qos.logback:logback*:jar:*</include>
+                <include>org.codehaus.groovy:groovy*:jar:*</include>
+            </includes>
+        </dependencySet>
+    </dependencySets>
+</assembly>
